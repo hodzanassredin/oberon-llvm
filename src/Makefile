@@ -1,10 +1,23 @@
-objects = main.o
+PROGNAME = oberonc
+#LIBS = -ljpeg -ldirectfb -pthread 
 
-llvm : $(objects)
-        cc -o oberonc $(objects)
+#INCLUDES = -I/usr/local/include/directfb 
+ 
+LDFLAGS = -Llibs/
+OBJECTS = main.o 
 
-$(objects) : 
-.PHONY : clean
+CFLAGS = -W -Wall -O2 -ggdb 
 
-clean :
-         -rm oberonc $(objects)  
+all: $(PROGNAME)
+
+$(PROGNAME): $(OBJECTS)
+	gcc -o $(PROGNAME) $(OBJECTS) 
+    #$(LIBS) $(INCLUDES) $(LDFLAGS)
+
+$(OBJECTS): Makefile
+
+.c.o: 
+	gcc -c $(CFLAGS) $(INCLUDES) -o $@ $< 
+
+clean:
+	rm *.o $(PROGNAME)
